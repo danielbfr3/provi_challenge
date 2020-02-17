@@ -13,15 +13,11 @@ class AddressController {
       state: Yup.string().required(),
     });
 
-    console.log('1');
-
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({
         error: 'Validation Error',
       });
     }
-
-    console.log('2');
 
     const addressExists = await Address.findOne({
       where: {
@@ -34,15 +30,11 @@ class AddressController {
       },
     });
 
-    console.log('3');
-
     if (addressExists) {
       return res.status(400).json({
         error: 'Address already exists',
       });
     }
-
-    console.log('4');
 
     const correios_api = new Correios();
     const cleanedCpf = req.body.cep.replace('-', '');
@@ -50,19 +42,24 @@ class AddressController {
       cep: cleanedCpf,
     });
 
-    console.log('5');
+    /**
+ * {
+  cep: '01312-001',
+  logradouro: 'Avenida Nove de Julho',
+  complemento: 'de 1300 a 2300 - lado par',
+  bairro: 'Bela Vista',
+  localidade: 'São Paulo',
+  uf: 'SP',
+  unidade: '',
+  ibge: '3550308',
+  gia: '1004'
+}
 
-    console.log(correiosApiResponse);
+ */
 
-    const {
-      id,
-      cep,
-      street,
-      number,
-      complement,
-      city,
-      state,
-    } = await Address.create(req.body);
+    const { id, number, complement, city, state } = await Address.create(
+      req.body
+    );
 
     return res.json({
       id,

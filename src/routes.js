@@ -8,6 +8,7 @@ import BirthdayController from './app/controllers/BirthdayController';
 import NameController from './app/controllers/NameController';
 import PhoneController from './app/controllers/PhoneController';
 import CpfController from './app/controllers/CpfController';
+import AmountController from './app/controllers/AmountController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -32,5 +33,8 @@ routes.put('/phone', PhoneController.update);
 
 routes.post('/cpf', CpfController.store);
 routes.put('/cpf', CpfController.update);
+
+routes.post('/amount', AmountController.store);
+routes.put('/amount', AmountController.update);
 
 export default routes;
